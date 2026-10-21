@@ -1,0 +1,76 @@
+{
+  "name": "dsh-jev-progress",
+  "version": "0.5.4",
+  "private": true,
+  "type": "module",
+  "description": "JeV 筛选任务进度，使用 DSH 原生翻译，在聊天区和流程画布显示，不改模型上下文",
+  "main": "./src/host.js",
+  "exports": {
+    ".": "./src/host.js",
+    "./hidden": "./src/host-hidden.js",
+    "./core": "./src/core/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml"
+  },
+  "scripts": {
+    "test": "node --test",
+    "build": "node scripts/build-client.mjs",
+    "check:release": "node scripts/release-check.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {},
+  "files": [
+    "src",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "third_party/DeepSeek-Harness-LICENSE",
+    "presets",
+    "docs/user-guide.md",
+    "docs/architecture.md",
+    "docs/development.md",
+    "integrations/dsh-cost-meter/README.md",
+    "integrations/dsh-cost-meter/auxiliary-billing.patch"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-connection",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-chat"
+      ]
+    },
+    "compatibility": {
+      "dsh": ">=0.2.1-rc.2 <0.3.0-0",
+      "dshReleases": {
+        "0.2.1-rc.2": "compatible"
+      }
+    }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Han-1413141/dsh-dev-thinkout.git"
+  },
+  "homepage": "https://github.com/Han-1413141/dsh-dev-thinkout#readme",
+  "bugs": {
+    "url": "https://github.com/Han-1413141/dsh-dev-thinkout/issues"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "jev",
+    "progress",
+    "workflow"
+  ]
+}

@@ -1,0 +1,20 @@
+node_modules/
+dist/
+.local/
+.env
+.env.*
+!.env.example
+*.log
+coverage/
+
+# Local development material and generated example projects.
+/pelican-*/
+/docs/*
+!/docs/user-guide.md
+!/docs/architecture.md
+!/docs/development.md
+/scripts/*
+!/scripts/build-client.mjs
+!/scripts/release-check.mjs
+
+/*.tgz
