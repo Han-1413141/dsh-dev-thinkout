@@ -95,6 +95,7 @@ flowchart LR
 - [开发与发布](docs/development.md)：构建、检查、本地接入和发布步骤。
 - [cost-meter 兼容说明](integrations/dsh-cost-meter/README.md)：所需接口、补丁基线和适配方法。
 - [更新记录](CHANGELOG.md)与[第三方来源](THIRD_PARTY_NOTICES.md)。
+- [发布与市场收录](https://github.com/Han-1413141/dsh-jev-thinkout/blob/main/MARKETPLACES.md)：npm、GitHub Release、各渠道申请链接及审核状态。
 
 ## 开发
 
