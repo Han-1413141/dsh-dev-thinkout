@@ -1,4 +1,5 @@
 import {taskFlow,arrangeFlow,flowHistory} from './flow-model.js';
+import {uiIcon} from './icons.js';
 
 let flowInstance=0;
 /** Native scrolling and frame-batched connectors; no redraw while panning. */
@@ -8,7 +9,8 @@ export function mountTaskFlow(holder,{phase,status,onMetrics=()=>{}}={}){
   const root=el('section','jev-horizontal-flow'),viewport=el('div','jev-flow-viewport'),surface=el('div','jev-flow-surface');
   const project=el('section','jev-flow-project'),head=el('div','jev-flow-project-head'),projectTitle=el('h3','jev-flow-project-title'),projectCount=el('span','jev-flow-project-count'),body=el('div','jev-flow-body');
   head.append(projectTitle,projectCount);project.append(head,body);surface.append(project);viewport.append(surface);root.append(viewport);holder.replaceChildren(root);
-  const shade=el('button','jev-flow-shade'),drawer=el('section','jev-flow-drawer'),drawerHead=el('div','jev-flow-drawer-head'),drawerTitle=el('h3','','任务详情'),close=el('button','jev-flow-detail-close','×'),detail=el('div','jev-flow-detail-content');
+  const shade=el('button','jev-flow-shade'),drawer=el('section','jev-flow-drawer'),drawerHead=el('div','jev-flow-drawer-head'),drawerTitle=el('h3','','任务详情'),close=el('button','jev-flow-detail-close'),detail=el('div','jev-flow-detail-content');
+  close.innerHTML=uiIcon('close');
   shade.type='button';shade.setAttribute('aria-label','收起任务详情');shade.tabIndex=-1;close.type='button';close.setAttribute('aria-label','关闭任务详情');
   drawerTitle.id=instance+'-detail';drawer.setAttribute('role','dialog');drawer.setAttribute('aria-labelledby',drawerTitle.id);drawer.inert=true;drawer.setAttribute('aria-hidden','true');drawerHead.append(drawerTitle,close);drawer.append(drawerHead,detail);root.append(shade,drawer);
   let model,arrangement,revision='',selected=null,lastFocus=null,scale=1,frame=0,panFrame=0,drag=null,disposed=false,direction='horizontal',input,gridSequence=0;
@@ -21,7 +23,7 @@ export function mountTaskFlow(holder,{phase,status,onMetrics=()=>{}}={}){
     const parent=model.groups.find(g=>g.id===item.parentId),records=flowHistory(item.records||[]);
     detail.replaceChildren(el('p','jev-flow-breadcrumb',parent?parent.title+' / '+item.title:item.kind==='stage'?'按阶段归组 · '+item.title:'父任务 / '+item.title),el('h3','jev-flow-detail-title',item.title),el('p','jev-flow-detail-meta',(status[item.status]||'进展记录')+' · '+records.length+' 条进展'));
     if(item.children?.length){const children=el('div','jev-flow-detail-children');for(const child of item.children){const button=el('button','',child.title+' · '+(status[child.status]||'进展记录'));button.type='button';button.onclick=()=>showDetail(child,trigger);children.append(button);}detail.append(children);}
-    if(!item.parentId){const links=model.edges.filter(e=>e.from===item.id||e.to===item.id);if(links.length){const relations=el('div','jev-flow-detail-relations');for(const edge of links)for(const link of edge.links||[]){relations.append(el('p','',link.fromTitle+(edge.type==='parallel'?' ∥ 并行 ':edge.type==='revise'?' ↶ 修订 ':' → ')+link.toTitle));}detail.append(relations);}}
+    if(!item.parentId){const links=model.edges.filter(e=>e.from===item.id||e.to===item.id);if(links.length){const relations=el('div','jev-flow-detail-relations');for(const edge of links)for(const link of edge.links||[]){const row=el('p','jev-flow-relation'),kind=el('span','jev-flow-relation-kind');kind.innerHTML=uiIcon(edge.type==='parallel'?'parallel':edge.type==='revise'?'revise':'next');kind.append(doc.createTextNode(edge.type==='parallel'?'并行':edge.type==='revise'?'修订':'串行'));row.append(el('span','',link.fromTitle),kind,el('span','',link.toTitle));relations.append(row);}detail.append(relations);}}
     const list=el('ol','jev-flow-timeline');
     for(const record of records){const row=el('li',''),time=el('span','jev-flow-event-meta',(phase[record.phase]||'工作进展')+' · '+(status[record.intent]||'进展记录'));row.append(time,el('p','',record.summary||record.text));list.append(row);}
     if(!records.length)detail.append(el('p','jev-flow-no-history','这项任务还没有新的进展记录。'));else detail.append(list);
@@ -32,13 +34,17 @@ export function mountTaskFlow(holder,{phase,status,onMetrics=()=>{}}={}){
     let entry=cards.get(item.id);
     if(!entry){const card=el('button','jev-flow-task'),state=el('span','jev-flow-task-state'),title=el('strong','jev-flow-task-title'),count=el('span','jev-flow-task-count');card.type='button';card.append(state,title,count);entry={card,state,title,count};cards.set(item.id,entry);card.onclick=()=>showDetail(entry.item,card);}
     entry.item=item;entry.card.dataset.status=item.status;entry.card.dataset.item=item.id;entry.card.title=item.title;
-    entry.state.textContent=(item.status==='active'?'● ':['completed','reported_done'].includes(item.status)?'✓ ':'○ ')+(status[item.status]||'进展记录');
-    entry.title.textContent=item.title;entry.count.textContent=flowHistory(item.records).length+' 条进展  ↗';return entry.card;
+    const stateLabel=status[item.status]||'进展记录',stateKey=item.status+':'+stateLabel;
+    if(entry.stateKey!==stateKey){entry.state.innerHTML=uiIcon(item.status==='active'?'dot':['completed','reported_done'].includes(item.status)?'check':'circle');entry.state.append(doc.createTextNode(stateLabel));entry.stateKey=stateKey;}
+    entry.title.textContent=item.title;const visibleCount=flowHistory(item.records).length;
+    if(entry.visibleCount!==visibleCount){entry.count.textContent=visibleCount+' 条进展 ';entry.count.insertAdjacentHTML('beforeend',uiIcon('external'));entry.visibleCount=visibleCount;}
+    return entry.card;
   }
   function groupCard(group,compact){
     let entry=parents.get(group.id);
     if(!entry){
-      const card=el('section','jev-flow-parent'),heading=el('button','jev-flow-parent-heading'),label=el('span','jev-flow-parent-label'),title=el('strong'),state=el('span','jev-flow-parent-state'),chevron=el('span','jev-flow-parent-chevron','⌄'),content=el('div','jev-flow-parent-content'),summary=el('button','jev-flow-collapsed-summary');
+      const card=el('section','jev-flow-parent'),heading=el('button','jev-flow-parent-heading'),label=el('span','jev-flow-parent-label'),title=el('strong'),state=el('span','jev-flow-parent-state'),chevron=el('span','jev-flow-parent-chevron'),content=el('div','jev-flow-parent-content'),summary=el('button','jev-flow-collapsed-summary');
+      chevron.innerHTML=uiIcon('chevron');
       heading.type='button';summary.type='button';label.append(title,el('small','jev-flow-parent-kind'));heading.append(label,state,chevron);card.append(heading,content,summary);content.id=instance+'-group-'+parents.size;heading.setAttribute('aria-controls',content.id);
       entry={card,heading,label,title,state,content,summary};parents.set(group.id,entry);
       if(group.children.length>8)collapsed.add(group.id);
@@ -62,7 +68,7 @@ export function mountTaskFlow(holder,{phase,status,onMetrics=()=>{}}={}){
       if(!band.independent&&!vertical){grid.style.gridTemplateColumns=minWidths.map(size=>`minmax(${size}px,${Math.max(1,size/min).toFixed(2)}fr)`).join(' ');}
       const svg=doc.createElementNS(ns,'svg');svg.classList.add('jev-flow-lines');svg.setAttribute('aria-hidden','true');grid.dataset.marker=String(++gridSequence);grid.append(svg);
       const rendered=new Map(),parallel=[];
-      for(const column of band.columns){const col=el('div','jev-flow-column');for(const component of column){const box=el('div',component.parallel?'jev-flow-parallel':'jev-flow-items');if(component.parallel){box.style.setProperty('--flow-parallel-count',component.items.length);box.append(el('span','jev-flow-parallel-label','∥ 并行 · '+component.items.length+' 个分支'));parallel.push(box);}for(const item of component.items){const card=render(item);box.append(card);rendered.set(item.id,card);}col.append(box);}grid.append(col);}
+      for(const column of band.columns){const col=el('div','jev-flow-column');for(const component of column){const box=el('div',component.parallel?'jev-flow-parallel':'jev-flow-items');if(component.parallel){box.style.setProperty('--flow-parallel-count',component.items.length);const label=el('span','jev-flow-parallel-label');label.innerHTML=uiIcon('parallel');label.append(doc.createTextNode('并行 · '+component.items.length+' 个分支'));box.append(label);parallel.push(box);}for(const item of component.items){const card=render(item);box.append(card);rendered.set(item.id,card);}col.append(box);}grid.append(col);}
       const set=new Set(band.itemIds);grids.push({grid,svg,rendered,parallel,edges:plan.edges.filter(e=>set.has(e.from)&&set.has(e.to)),vertical:vertical&&!band.independent});wrapper.append(grid);target.append(wrapper);
     }
   }

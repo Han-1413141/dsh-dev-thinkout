@@ -1,4 +1,4 @@
-import { progressIcon } from './icons.js';
+import { progressIcon, uiIcon } from './icons.js';
 
 /**
  * UI-only JeV progress messages.
@@ -331,8 +331,9 @@ function createMessageElement(doc, message) {
   head.className = 'jev-chat-head';
   const label = doc.createElement('span');
   label.className = 'jev-chat-label';
-  label.textContent = JEV_CHAT_LABEL;
+  label.innerHTML = uiIcon('badge');
   label.title='JeV 整理的工作进度';
+  label.setAttribute('role','img');
   label.setAttribute('aria-label','JeV 工作进度');
   const meta = doc.createElement('span');
   meta.className = 'jev-chat-meta';
@@ -361,7 +362,6 @@ function updateMessageElement(parts, message) {
   article.dataset.jevSummaryAppearance=message.summaryAppearance??'plain';
   article.dataset.jevAnimate=message.animate?'true':'false';
   parts.nativeTag.hidden=appearance!=='native'||message.kind!=='progress';
-  setText(article.querySelector('.jev-chat-label'),JEV_CHAT_LABEL);
   setText(parts.text, message.text);
   const meta = {task_summary:'任务摘要',plan_summary:'方案',stage_summary:'阶段小结'}[message.kind]??'';
   setText(parts.meta, meta);

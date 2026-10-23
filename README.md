@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/Han-1413141/dsh-jev-thinkout/actions/workflows/ci.yml/badge.svg)](https://github.com/Han-1413141/dsh-jev-thinkout/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/Han-1413141/dsh-jev-thinkout)](https://github.com/Han-1413141/dsh-jev-thinkout/releases)
+[![npm](https://img.shields.io/npm/v/dsh-jev-progress)](https://www.npmjs.com/package/dsh-jev-progress)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 **JeV 思维链外显，让 DeepSeek 的任务进展看得见。**
@@ -10,7 +11,7 @@ DeepSeek 持续思考时，也能在聊天中看到它正在规划什么、推�
 
 JeV 负责识别值得展示的内容，正文可选择轻量摘要或 DSH 原生翻译。输出保留任务进程和关键结论，过滤重复计划与琐碎细节；主模型上下文保持不变。任务流程图进一步展示父子任务、串行递进与并行分支。
 
-这是社区插件。仓库名为 `dsh-jev-thinkout`，安装包及插件标识为 `dsh-jev-progress`。
+这是社区插件。仓库名为 `dsh-jev-thinkout`，npm 包名及插件标识为 `dsh-jev-progress`。
 
 ## 效果对照
 
@@ -24,10 +25,18 @@ JeV 负责识别值得展示的内容，正文可选择轻量摘要或 DSH 原�
 
 ## 安装
 
-当前版本 **0.5.4**。支持 DSH `>=0.2.1-rc.2 <0.3.0`，已在桌面端 `0.2.1-rc.2` 接入；当前进度观察针对 DeepSeek Flash，实测模型为 V4.1 Flash 1017。需要 DSH 原生翻译服务。
+当前版本 **0.5.5**。支持 DSH `>=0.2.1-rc.2 <0.3.0`，已在桌面端 `0.2.1-rc.2` 接入；当前进度观察针对 DeepSeek Flash，实测模型为 V4.1 Flash 1017。需要 DSH 原生翻译服务。
+
+通过 npm 安装：
 
 ```powershell
-dsh plugin --profile desktop add "https://github.com/Han-1413141/dsh-jev-thinkout/releases/download/v0.5.4/dsh-jev-thinkout-0.5.4.tgz"
+dsh plugin --profile desktop add dsh-jev-progress@0.5.5
+```
+
+也可以使用 GitHub Release 安装包：
+
+```powershell
+dsh plugin --profile desktop add "https://github.com/Han-1413141/dsh-jev-thinkout/releases/download/v0.5.5/dsh-jev-thinkout-0.5.5.tgz"
 ```
 
 安装后重新打开 DSH，在插件列表中确认 `dsh-jev-progress` 已启用。使用其他 profile 时，替换命令中的 `desktop`；找不到 `dsh` 命令时，使用安装目录内的 `resources/runtime/cli/bin/dsh.cmd`。详细步骤见[使用指南](docs/user-guide.md)。

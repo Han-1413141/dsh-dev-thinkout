@@ -12,7 +12,7 @@ import { createCostIntegration } from './cost-integration.js';
 import { createKeyManager } from './key-manager.js';
 
 export const name = 'dsh-jev-progress';
-export const version = '0.5.4';
+export const version = '0.5.5';
 export const inject = ['llm','translator'];
 
 export async function apply(ctx, config = {}) {

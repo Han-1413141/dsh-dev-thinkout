@@ -15,6 +15,16 @@
 @media(max-width:1100px){.jev-flow-dialog .jev-caption{display:none}.jev-flow-actions{margin-left:auto}.jev-flow-viewport{padding:18px}.jev-flow-project{padding:0 17px 18px}.jev-flow-project-count{font-size:9px}}
 @media(max-width:760px){.jev-flow-dialog>.jev-toolbar{padding:10px 14px;gap:10px}.jev-flow-dialog .jev-toolbar .jev-branch{max-width:145px}.jev-flow-project-head{align-items:flex-start;flex-direction:column;gap:9px}.jev-flow-project-title{max-width:100%}.jev-flow-dialog .jev-scale{min-width:30px}.jev-flow-actions{gap:7px}.jev-flow-dialog .jev-toolbar button{padding:5px 7px}.jev-flow-dialog footer{padding:10px 16px}.jev-flow-viewport{padding:14px}}
 @media(prefers-reduced-motion:reduce){.jev-flow-drawer,.jev-flow-shade,.jev-flow-parent-chevron,.jev-flow-task{transition:none}}
+
+/* Shared SVG symbols keep macOS and Windows status marks identical. */
+.jev-flow-detail-close{display:inline-flex;align-items:center;justify-content:center}
+.jev-flow-parent-chevron{display:inline-flex;align-items:center;justify-content:center;transform-origin:center}
+.jev-flow-parent-chevron .jev-symbol{width:14px;height:14px}
+.jev-flow-task-state,.jev-flow-task-count,.jev-flow-parallel-label{display:inline-flex;align-items:center;gap:4px}
+.jev-flow-task-state .jev-symbol,.jev-flow-task-count .jev-symbol,.jev-flow-parallel-label .jev-symbol{width:12px;height:12px}
+.jev-flow-relation{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.jev-flow-relation-kind{display:inline-flex;align-items:center;gap:3px;white-space:nowrap;color:var(--dsw-alias-label-tertiary,#8b9baa)}
+.jev-flow-relation-kind .jev-symbol{width:12px;height:12px}
 .jev-horizontal-flow[data-direction=vertical] .jev-flow-grid{grid-template-columns:minmax(0,1fr)!important;gap:42px}
 .jev-horizontal-flow[data-direction=vertical] .jev-flow-column{flex-direction:row;align-items:center;gap:18px}
 .jev-horizontal-flow[data-direction=vertical] .jev-flow-items{flex:1}

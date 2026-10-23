@@ -7,3 +7,24 @@ export function progressIcon(style='orbit') {
   if(style==='native')return `<span class="jev-icon jev-icon-native" aria-hidden="true">${THINK_SVG}</span>`;
   return '<span class="jev-icon jev-icon-orbit" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><g class="jev-orbit-rings"><ellipse cx="12" cy="12" rx="9.5" ry="4"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(120 12 12)"/></g><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle class="jev-orbit-dot" cx="21.5" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span>';
 }
+
+// Fixed vector geometry keeps small UI marks independent of the system font.
+const UI_ICON_PATHS=Object.freeze({
+  close:'<path d="m4 4 8 8M12 4l-8 8"/>',
+  plus:'<path d="M8 3v10M3 8h10"/>',
+  minus:'<path d="M3 8h10"/>',
+  chevron:'<path d="m4 6 4 4 4-4"/>',
+  external:'<path d="M5 3h8v8M13 3 3 13"/>',
+  check:'<path d="m3 8 3.25 3.25L13 4.5"/>',
+  circle:'<circle cx="8" cy="8" r="4.5"/>',
+  dot:'<circle cx="8" cy="8" r="3" fill="currentColor" stroke="none"/>',
+  parallel:'<path d="M5.5 3v10M10.5 3v10"/>',
+  next:'<path d="M2.5 8h11M9 3.5 13.5 8 9 12.5"/>',
+  revise:'<path d="M5 3 2 6l3 3M2.5 6H9a4 4 0 0 1 0 8H7"/>',
+  badge:'<path d="M9.5 5.5v5.25A2.75 2.75 0 0 1 6.75 13.5H6"/><circle cx="9.5" cy="2.5" r=".75" fill="currentColor" stroke="none"/>',
+});
+
+export function uiIcon(name){
+  if(!Object.hasOwn(UI_ICON_PATHS,name))return '';
+  return `<svg class="jev-symbol jev-symbol-${name}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICON_PATHS[name]}</svg>`;
+}

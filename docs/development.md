@@ -26,10 +26,10 @@ npm run build
 npm pack --pack-destination .
 ```
 
-然后安装生成的 `dsh-jev-progress-0.5.4.tgz`：
+然后安装生成的 `dsh-jev-progress-0.5.5.tgz`：
 
 ```powershell
-dsh plugin --profile desktop add ./dsh-jev-progress-0.5.4.tgz
+dsh plugin --profile desktop add ./dsh-jev-progress-0.5.5.tgz
 ```
 
 开发时可使用独立的 DSH profile，避免与日常配置混在一起。宿主读取 `cordis.patch.yml` 自动加载插件。缺少翻译服务时先加载 DSH 原生翻译插件；不要向主模型注入一段提示词来替代宿主事件接入。
@@ -65,9 +65,9 @@ dsh plugin --profile desktop add ./dsh-jev-progress-0.5.4.tgz
 1. 同步 `package.json` 与 `src/host.js` 的版本号，更新 `CHANGELOG.md` 和安装链接。
 2. 执行 `npm test`、`npm run build`、`npm run check:release`，检查安装包白名单。
 3. 提交、推送，等待 GitHub Actions 通过；确认远程检查对应当前提交。
-4. 创建对应版本标签和 GitHub Release，附上 `.tgz` 与 SHA-256 文件。
+4. 创建对应版本标签和 GitHub Release，附上 `.tgz` 与 SHA-256 文件；将同一份 `.tgz` 发布到 npm。
 5. 从 Release 下载安装包并核对摘要与内容。
 
-仓库发布和 npm 发布分开进行。本项目当前通过 GitHub Release 提供安装包，`private: true` 用于防止误推送到 npm。
+本项目同时通过 GitHub Release 与 npm 分发，使用同一份安装包。npm 包名及内部插件标识为 `dsh-jev-progress`，公开仓库名为 `dsh-jev-thinkout`。发布前确认 npm 登录身份，并使用 `npm publish <已核对的安装包.tgz> --access public`，不要重新打包后发布另一份内容。
 
 当前自动化覆盖业务逻辑、取消与恢复、正文投影、流程关系、方向保存及费用接口。浏览器工具初始化失败的环境不能视为完成视觉验收；界面调整还需要实际 DSH 窗口复看。

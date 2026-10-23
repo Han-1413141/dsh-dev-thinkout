@@ -1,7 +1,6 @@
 {
   "name": "dsh-jev-progress",
-  "version": "0.5.4",
-  "private": true,
+  "version": "0.5.5",
   "type": "module",
   "description": "JeV 思维链外显：将 DeepSeek 的任务规划、进度与阶段小结呈现为聊天正文，支持轻量摘要、原生翻译及父子任务流程图，不改主模型上下文",
   "main": "./src/host.js",
@@ -19,7 +18,8 @@
     "check:release": "node scripts/release-check.mjs"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20",
+    "dsh": ">=0.2.1-rc.2 <0.3.0-0"
   },
   "dependencies": {},
   "files": [
@@ -69,10 +69,18 @@
     "url": "https://github.com/Han-1413141/dsh-jev-thinkout/issues"
   },
   "keywords": [
+    "dsh-plugin",
     "deepseek-harness",
     "dsh",
     "jev",
     "progress",
-    "workflow"
-  ]
+    "workflow",
+    "thinkout",
+    "reasoning-summary"
+  ],
+  "author": "Han-1413141",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
 }

@@ -44,7 +44,7 @@
 .jev-icon svg{width:100%;height:100%;display:block}
 .jev-chat-avatar{display:flex;align-items:center;justify-content:center;min-height:24px}
 .jev-orbit-rings,.jev-orbit-dot{transform-origin:12px 12px}
-.jev-whale-mask{display:none;position:absolute;inset:0;background:currentColor;mask:var(--jev-whale-mask) center/100% 100% no-repeat alpha}
+.jev-whale-mask{display:none;position:absolute;inset:0;background:currentColor;-webkit-mask-image:var(--jev-whale-mask);mask-image:var(--jev-whale-mask);-webkit-mask-position:center;mask-position:center;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;mask-mode:alpha}
 .jev-native-tag{white-space:nowrap;color:var(--dsw-alias-label-tertiary,#8a8e98)}
 .jev-native-tag[hidden]{display:none}
 .jev-native-separator{padding:0 8px;opacity:.6}
@@ -57,16 +57,41 @@
   [data-jev-animate=true] .jev-orbit-dot{animation:jev-orbit-turn 2.8s linear infinite}
   [data-jev-animate=true] .jev-icon-native{animation:jev-think-breathe 2.2s ease-in-out infinite}
   [data-jev-animate=true] .jev-whale-still{animation:jev-tail-sway 1.7s ease-in-out infinite;transform-origin:50% 86%}
-  @supports(mask-mode:alpha){
-    @media(forced-colors:none){
-      [data-jev-animate=true] .jev-whale-mask{display:block}
-      [data-jev-animate=true] .jev-whale-still{display:none}
-    }
+  @supports (mask-image:linear-gradient(#000,#000)) or (-webkit-mask-image:linear-gradient(#000,#000)){
+    [data-jev-animate=true] .jev-whale-mask{display:block}
+    [data-jev-animate=true] .jev-whale-still{display:none}
   }
+}
+@media(forced-colors:active){
+  [data-jev-animate=true] .jev-whale-mask{display:none}
+  [data-jev-animate=true] .jev-whale-still{display:block;animation:none}
 }
 @keyframes jev-orbit-turn{to{transform:rotate(360deg)}}
 @keyframes jev-think-breathe{0%,100%{opacity:.6}50%{opacity:1}}
 @keyframes jev-tail-sway{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(12deg)}}
+
+.jev-symbol{display:inline-block;width:16px;height:16px;flex:none;vertical-align:-.18em;overflow:visible}
+.jev-chat-label{display:inline-flex;align-items:center;vertical-align:middle}
+.jev-chat-label .jev-symbol-badge{width:9px;height:12px}
+.jev-history-close,.jev-settings-close,.jev-close,.jev-minus,.jev-plus{display:inline-flex;align-items:center;justify-content:center}
+.jev-history-close .jev-symbol,.jev-settings-close .jev-symbol{width:18px;height:18px}
+.jev-history-marker .jev-symbol{width:7px;height:7px}
+.jev-live{display:inline-flex;align-items:center;gap:5px}
+.jev-live .jev-symbol{width:12px;height:12px}
+.jev-key-guide a .jev-symbol{width:12px;height:12px;margin-left:3px}
+.jev-thresholds>summary,.jev-key-guide>summary{display:flex;align-items:center;gap:6px;list-style:none}
+.jev-thresholds>summary::-webkit-details-marker,.jev-key-guide>summary::-webkit-details-marker{display:none}
+.jev-thresholds>summary::marker,.jev-key-guide>summary::marker{content:''}
+.jev-thresholds>summary .jev-symbol,.jev-key-guide>summary .jev-symbol{width:12px;height:12px;transform:rotate(-90deg);transition:transform .15s}
+.jev-thresholds[open]>summary .jev-symbol,.jev-key-guide[open]>summary .jev-symbol{transform:none}
+.jev select,.jev .jev-setting-section select,.jev .jev-toolbar select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%238b929f' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;background-size:14px 14px;padding-right:29px}
+.jev-thresholds input[type=range]{appearance:none;-webkit-appearance:none;height:18px;background:transparent;cursor:pointer}
+.jev-thresholds input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:var(--dsw-alias-border-l2,#dce4f0)}
+.jev-thresholds input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:var(--dsw-alias-border-l2,#dce4f0)}
+.jev-thresholds input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:12px;height:12px;margin-top:-4px;border:2px solid #4d6bfe;border-radius:50%;background:var(--dsw-alias-bg-base,#fff)}
+.jev-thresholds input[type=range]::-moz-range-thumb{width:8px;height:8px;border:2px solid #4d6bfe;border-radius:50%;background:var(--dsw-alias-bg-base,#fff)}
+.jev-thresholds input[type=range]:focus-visible{outline:2px solid #4d6bfe66;outline-offset:3px;border-radius:4px}
+@media(prefers-reduced-motion:reduce){.jev-thresholds>summary .jev-symbol,.jev-key-guide>summary .jev-symbol{transition:none}}
 
 /* One quiet status row; full activity history stays collapsed by default. */
 .jev{position:relative;color:var(--dsw-alias-label-primary,#343b48);font-family:inherit}
