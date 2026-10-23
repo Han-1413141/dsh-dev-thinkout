@@ -3,7 +3,7 @@
   "version": "0.5.4",
   "private": true,
   "type": "module",
-  "description": "JeV 筛选任务进度，使用 DSH 原生翻译，在聊天区和流程画布显示，不改模型上下文",
+  "description": "JeV 思维链外显：将 DeepSeek 的任务规划、进度与阶段小结呈现为聊天正文，支持轻量摘要、原生翻译及父子任务流程图，不改主模型上下文",
   "main": "./src/host.js",
   "exports": {
     ".": "./src/host.js",
@@ -35,6 +35,8 @@
     "docs/user-guide.md",
     "docs/architecture.md",
     "docs/development.md",
+    "docs/images/jev-thinkout-progress.png",
+    "docs/images/dsh-native-response.png",
     "integrations/dsh-cost-meter/README.md",
     "integrations/dsh-cost-meter/auxiliary-billing.patch"
   ],
@@ -60,11 +62,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Han-1413141/dsh-dev-thinkout.git"
+    "url": "git+https://github.com/Han-1413141/dsh-jev-thinkout.git"
   },
-  "homepage": "https://github.com/Han-1413141/dsh-dev-thinkout#readme",
+  "homepage": "https://github.com/Han-1413141/dsh-jev-thinkout#readme",
   "bugs": {
-    "url": "https://github.com/Han-1413141/dsh-dev-thinkout/issues"
+    "url": "https://github.com/Han-1413141/dsh-jev-thinkout/issues"
   },
   "keywords": [
     "deepseek-harness",

@@ -8,7 +8,7 @@
 2. 在终端执行：
 
 ```powershell
-dsh plugin --profile desktop add "https://github.com/Han-1413141/dsh-dev-thinkout/releases/download/v0.5.4/dsh-dev-thinkout-0.5.4.tgz"
+dsh plugin --profile desktop add "https://github.com/Han-1413141/dsh-jev-thinkout/releases/download/v0.5.4/dsh-jev-thinkout-0.5.4.tgz"
 ```
 
 3. 重新打开 DSH 桌面端，在插件列表中找到 `dsh-jev-progress` 并确认启用。

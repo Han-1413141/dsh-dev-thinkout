@@ -1,21 +1,33 @@
-# dsh-dev-thinkout
+# dsh-jev-thinkout
 
-[![CI](https://github.com/Han-1413141/dsh-dev-thinkout/actions/workflows/ci.yml/badge.svg)](https://github.com/Han-1413141/dsh-dev-thinkout/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/Han-1413141/dsh-dev-thinkout)](https://github.com/Han-1413141/dsh-dev-thinkout/releases)
+[![CI](https://github.com/Han-1413141/dsh-jev-thinkout/actions/workflows/ci.yml/badge.svg)](https://github.com/Han-1413141/dsh-jev-thinkout/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Han-1413141/dsh-jev-thinkout)](https://github.com/Han-1413141/dsh-jev-thinkout/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-为 DeepSeek Harness（DSH）显示任务进度、规划和阶段小结。模型持续思考时，用户可以看到正在推进什么、遇到什么问题、完成了哪一部分，并通过流程图查看父子任务、串行与并行关系。
+**JeV 思维链外显，让 DeepSeek 的任务进展看得见。**
 
-JeV 负责筛选有价值的任务信息；正文可以使用独立的轻量摘要，也可以使用 DSH 原生翻译。插件不改写主模型上下文，不将原始思考逐句搬进聊天。
+DeepSeek 持续思考时，也能在聊天中看到它正在规划什么、推进到哪里、有哪些阶段结果。dsh-jev-thinkout 为 DeepSeek Harness（DSH）提供 **JeV 思维链外显**：从模型思考中筛选任务信息，概括为自然的进度、规划和小结，穿插在对应工作步骤附近。
 
-这是社区插件。仓库名为 `dsh-dev-thinkout`，安装包及插件标识为 `dsh-jev-progress`。
+JeV 负责识别值得展示的内容，正文可选择轻量摘要或 DSH 原生翻译。输出保留任务进程和关键结论，过滤重复计划与琐碎细节；主模型上下文保持不变。任务流程图进一步展示父子任务、串行递进与并行分支。
+
+这是社区插件。仓库名为 `dsh-jev-thinkout`，安装包及插件标识为 `dsh-jev-progress`。
+
+## 效果对照
+
+两张原图展示同一任务的过程摘要与原生答复，可点击查看大图。
+
+| JeV 思维链外显：规划、进度与阶段小结 | DSH 原生答复：最终交付内容 |
+| --- | --- |
+| ![JeV 思维链外显，将任务规划、执行进展和阶段结果呈现在聊天正文中](docs/images/jev-thinkout-progress.png) | ![同一任务的 DSH 原生最终答复，展示版本存档和交付结果](docs/images/dsh-native-response.png) |
+
+过程摘要帮助用户跟上长任务的推进，也能在任务结束后回看；最终答复仍由主模型输出。摘要可使用无标识正文样式，输出频率、筛选严格程度和流程方向均可在设置中调整。
 
 ## 安装
 
 当前版本 **0.5.4**。支持 DSH `>=0.2.1-rc.2 <0.3.0`，已在桌面端 `0.2.1-rc.2` 接入；当前进度观察针对 DeepSeek Flash，实测模型为 V4.1 Flash 1017。需要 DSH 原生翻译服务。
 
 ```powershell
-dsh plugin --profile desktop add "https://github.com/Han-1413141/dsh-dev-thinkout/releases/download/v0.5.4/dsh-dev-thinkout-0.5.4.tgz"
+dsh plugin --profile desktop add "https://github.com/Han-1413141/dsh-jev-thinkout/releases/download/v0.5.4/dsh-jev-thinkout-0.5.4.tgz"
 ```
 
 安装后重新打开 DSH，在插件列表中确认 `dsh-jev-progress` 已启用。使用其他 profile 时，替换命令中的 `desktop`；找不到 `dsh` 命令时，使用安装目录内的 `resources/runtime/cli/bin/dsh.cmd`。详细步骤见[使用指南](docs/user-guide.md)。
@@ -62,7 +74,7 @@ flowchart LR
 - JeV 与轻量摘要分别记录请求次数、Token 和成功、失败、取消；未知费用保留为未知。
 - 金额为目录估算时明确标注，不等同于账户实扣。原生翻译方式不调用轻量摘要模型。
 - 插件自己的用量记录可独立使用。统一记账需要 dsh-cost-meter 提供兼容接口，见 [cost-meter 适配说明及可选补丁](integrations/dsh-cost-meter/README.md)。
-- Key 保存在本机凭据服务，Windows 必要时使用 DPAPI 加密。仓库和安装包不含 Key、真实会话或本机账本。
+- Key 保存在本机凭据服务，Windows 必要时使用 DPAPI 加密。Key、会话日志与本机账本不进入仓库和安装包；上方对照截图由使用者提供并授权公开。
 - 筛选和摘要会调用外部服务；自动过滤常见凭据不等于完全识别所有敏感内容。具体数据去向见[使用指南](docs/user-guide.md#数据去向)。
 
 「已报告完成」表示存在明确的完成陈述，不等于独立验证通过。插件不修改主模型的任务清单，也不把普通工具成功当作整项任务完成。
@@ -86,7 +98,7 @@ npm run check:release
 
 无额外 npm 运行依赖。自动化检查不需要 Key，也不调用外部模型；前端源码位于 `web/`，构建结果为 `lib/client.js`。当前业务检查覆盖 100 项；界面仍需要在实际 DSH 窗口确认，检查通过不代表所有宿主版本已完成视觉验收。
 
-通过 [Issues](https://github.com/Han-1413141/dsh-dev-thinkout/issues) 反馈问题，请提供版本、摘要方式、错误码及复现步骤，并去除凭据和私人会话内容。
+通过 [Issues](https://github.com/Han-1413141/dsh-jev-thinkout/issues) 反馈问题，请提供版本、摘要方式、错误码及复现步骤，并去除凭据和私人会话内容。
 
 ## 许可
 

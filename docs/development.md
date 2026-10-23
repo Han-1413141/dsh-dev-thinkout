@@ -7,8 +7,8 @@
 - 单元检查不需要 JeV Key，不调用外部模型。
 
 ```powershell
-git clone https://github.com/Han-1413141/dsh-dev-thinkout.git
-cd dsh-dev-thinkout
+git clone https://github.com/Han-1413141/dsh-jev-thinkout.git
+cd dsh-jev-thinkout
 npm ci --ignore-scripts
 npm test
 npm run build
@@ -56,7 +56,7 @@ dsh plugin --profile desktop add ./dsh-jev-progress-0.5.4.tgz
 
 ## 提交范围
 
-提交源码、检查、构建结果和用户文档。不要提交 `.local/`、真实会话、凭据、账本、本机绝对路径、独立示例项目或临时研究材料。测试中的输入使用合成文本。
+提交源码、检查、构建结果和用户文档。不要提交 `.local/`、会话日志、凭据、账本、本机绝对路径、独立示例项目或临时研究材料。测试中的输入使用合成文本。`docs/images/` 中的两张效果截图由使用者提供并授权公开，按原图保留，并在发布检查中逐项列入白名单。
 
 涉及提示词或筛选条件的修改，应检查首段、中途结果、重复计划、实现细节、取消和晚到结果；不要用更多输出条数代替内容质量。涉及计费的修改，应区分未知金额、目录估算和真实实扣。
 

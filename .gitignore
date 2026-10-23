@@ -13,6 +13,10 @@ coverage/
 !/docs/user-guide.md
 !/docs/architecture.md
 !/docs/development.md
+!/docs/images/
+/docs/images/*
+!/docs/images/jev-thinkout-progress.png
+!/docs/images/dsh-native-response.png
 /scripts/*
 !/scripts/build-client.mjs
 !/scripts/release-check.mjs

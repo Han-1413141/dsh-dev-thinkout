@@ -31,8 +31,8 @@ JeV 按当前官方免费服务记录费用 0；轻量调用使用请求当时�
 git clone https://github.com/Han-1413141/dsh-cost-meter.git dsh-cost-meter-jev
 cd dsh-cost-meter-jev
 git checkout 993bc1bde48017a4a1de43ddcd49cdee14e6bcf8
-git apply --check ../dsh-dev-thinkout/integrations/dsh-cost-meter/auxiliary-billing.patch
-git apply ../dsh-dev-thinkout/integrations/dsh-cost-meter/auxiliary-billing.patch
+git apply --check ../dsh-jev-thinkout/integrations/dsh-cost-meter/auxiliary-billing.patch
+git apply ../dsh-jev-thinkout/integrations/dsh-cost-meter/auxiliary-billing.patch
 npm ci
 npm run build
 node test/auxiliary-usage.mjs

@@ -12,12 +12,19 @@ if(Buffer.byteLength(client)>262144)throw Error('Client bundle exceeds 256 KiB')
 const files=execFileSync('git',['ls-files','-z'],{encoding:'utf8'}).split('\0').filter(Boolean);
 if(!files.length)throw Error('Stage the public source before checking the release');
 const allowedDocs=new Set(['docs/user-guide.md','docs/architecture.md','docs/development.md']);
+const allowedImages=new Set(['docs/images/jev-thinkout-progress.png','docs/images/dsh-native-response.png']);
+const pngSignature=Buffer.from([137,80,78,71,13,10,26,10]);
 const allowedScripts=new Set(['scripts/build-client.mjs','scripts/release-check.mjs']);
 const problems=[];
 for(const file of files){
   if(/(?:^|\/)(?:\.local|node_modules|pelican-[^/]+)(?:\/|$)|(?:^|\/)\.env(?:\.|$)|\.(?:xml|pem|key|pfx|p12|tgz)$/i.test(file))problems.push(file+': private/generated path');
-  if(file.startsWith('docs/')&&!allowedDocs.has(file))problems.push(file+': development material');
+  if(file.startsWith('docs/')&&!allowedDocs.has(file)&&!allowedImages.has(file))problems.push(file+': development material');
   if(file.startsWith('scripts/')&&!allowedScripts.has(file))problems.push(file+': local helper');
+  if(allowedImages.has(file)){
+    const image=fs.readFileSync(file);
+    if(image.length<24||!image.subarray(0,8).equals(pngSignature)||image.toString('ascii',12,16)!=='IHDR'||!image.readUInt32BE(16)||!image.readUInt32BE(20))problems.push(file+': invalid PNG image');
+    continue;
+  }
   const content=fs.readFileSync(file,'utf8');
   if(/sk-vsr-[A-Za-z0-9]{43}|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}/.test(content))problems.push(file+': credential-shaped value');
   if(/C:[\\/]+Users[\\/]+57752/i.test(content))problems.push(file+': personal machine path');
