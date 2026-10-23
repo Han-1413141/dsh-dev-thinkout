@@ -29,12 +29,13 @@ cf4cfe638c5f426fe7c6163c91dd6cc2c7ebdbbd9ecdb603c282292af1b0699b
 
 | 渠道 | 申请记录 | 当前状态 |
 | --- | --- | --- |
-| awesome-dsh-plugin / dsh-market 社区目录 | [PR #8844](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/pull/8844) | 已提交一个 `ui` 分类条目，等待目录检查及维护者审核 |
+| awesome-dsh-plugin / dsh-market 社区目录 | [PR #8844](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/pull/8844) | 目录 CI 和收录门槛检查均已通过，等待维护者合并 |
 | dshplugin.app | [申请 #442](https://github.com/vbarter/dsh-plugin-registry/issues/442) · [审核 PR #443](https://github.com/vbarter/dsh-plugin-registry/pull/443) | Manifest 预检通过，已生成审核 PR，等待合并 |
 | HackSing 插件目录 | [申请 #338](https://github.com/HackSing/dsh-plugins/issues/338) | 已提交，等待处理 |
 | Open Plugin Market / dshopen.org | [申请 #56](https://github.com/polang233/dsh-plugin-index/issues/56) | 已提交 npm 包、用途、兼容信息和对照截图，等待处理 |
 | DSH Market / dshplugin.io | [申请 #37](https://github.com/tjsdyy/dshplugin/issues/37) | 已通过网站指向的 GitHub 通道提交，等待处理 |
 | DSH Marketplace | [申请 #20](https://github.com/DshMarketPlace/awesome-dsh-plugin/issues/20) | 已提交收录请求，并如实说明当前尚未满足其常规标签发现的十次提交门槛 |
+| DSH Plugin Store | [官方投稿方式](https://dshpluginstore.com/submit) | 已向官方投稿邮箱发送收录申请，并核对已发送邮件，等待回复 |
 | dshfind | [官方收录规则](https://github.com/hikariming/dshfind#submit-your-plugin) · [本项目标签](https://github.com/Han-1413141/dsh-jev-thinkout) | 已添加 `dsh-plugin` 和 `deepseek-harness` 标签，等待定时发现；尚未确认正式收录 |
 
 dshfind 的公开规则是通过 `dsh-plugin` 标签每日发现新仓库，不需要先发 Issue；经历两次同步仍未出现时，再提交异常反馈。因此本次采用其自动发现流程，没有提前发送重复催收请求。
